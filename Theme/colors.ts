@@ -12,47 +12,9 @@ const brand = {
 };
 
 
-
-const bgColor = {
-	100: "#f4f7fc",
-	200: "#1f212e",
-	300: "#fefeff",
-};
-
-const fontColor = {
-	100: "white",
-};
-
-const purple = {
-	100: "#34164a",
-	200: "#3c1956",
-	300: "#451d62",
-	400: "#4d206f",
-	500: "#56247b",
-	600: "#F50407",
-	700: "#785095",
-	800: "#8966a3",
-	900: "#9a7cb0",
-};
-
-const yellow = {
-	100: "#91700e",
-	200: "#a98211",
-	300: "#c29513",
-	400: "#daa716",
-	500: "#f2ba18",
-	600: "#f3c12f",
-	700: "#f5c846",
-	800: "#f6cf5d",
-	900: "#f7d674",
-};
-
 const colors = {
 	brand,
-	bgColor,
-	fontColor,
-	purple,
-	yellow,
+	
 };
 
 export default colors;
