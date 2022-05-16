@@ -1,28 +1,67 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { Stack, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Flex, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { Container } from "../../Theme/common";
 import ReactHlsPlayer from "react-hls-player";
 
 export const HomePage = () => {
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://192.168.1.6:5000/44c8bee9.mp4.m3u8")
-  //       .then((res) => {
-  //         console.log(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+  const [video, setVideo] = useState<any>("");
+  const [data, setData] = useState<any>("");
+  useEffect(() => {
+    if (window) {
+      console.log(typeof window);
+    }
+    axios
+      .get("http://192.168.1.6:5000/allVideo")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  if (!data) {
+    return null;
+  }
+  console.log("dsa", video);
+
   return (
-    <Stack mx="auto" w={Container}>
-      <Text>home page</Text>
-      <ReactHlsPlayer
-        url={"http://192.168.1.6:5000/44c8bee9.mp4.m3u8"}
-        autoplay={true}
-        controls={true}
-      />
-    </Stack>
+    <>
+      <Stack mb={10} mx="auto" w={Container}>
+        <Text>home page</Text>
+        {data && (
+          <ReactHlsPlayer
+            url={`http://192.168.1.6:5000/public/${
+              video ? video : data[0].fileName
+            }`}
+            autoplay={false}
+            controls={true}
+          />
+        )}
+        <SimpleGrid columns={5} spacing={10}>
+          {data.map((el: any, ind: number) => {
+            return (
+              <>
+                <Flex
+                  cursor={"pointer"}
+                  h="300px"
+                  w="100%"
+                  bg={`url(${el.thubnail})`}
+                  bgPos={"center"}
+                  bgRepeat={"no-repeat"}
+                  bgSize={"cover"}
+                  key={ind}
+                  onClick={() => setVideo(el.fileName)}
+                >
+                  <Text p={3} bg="gray" h="40px" color="#c4c4c4">
+                    {el.description}
+                  </Text>
+                </Flex>
+              </>
+            );
+          })}
+        </SimpleGrid>
+      </Stack>
+    </>
   );
 };
