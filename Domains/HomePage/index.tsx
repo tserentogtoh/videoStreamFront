@@ -2,7 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Flex, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { Container } from "../../Theme/common";
-import ReactHlsPlayer from "react-hls-player";
+import dynamic from "next/dynamic";
+
+const A = dynamic(()=>import("react-hls-player"),{ssr:false})
 
 export const HomePage = () => {
   const [video, setVideo] = useState<any>("");
@@ -30,7 +32,7 @@ export const HomePage = () => {
       <Stack mb={10} mx="auto" w={Container}>
         <Text>home page</Text>
         {data && (
-          <ReactHlsPlayer
+          <A
             url={`http://192.168.1.6:5000/public/${
               video ? video : data[0].fileName
             }`}
