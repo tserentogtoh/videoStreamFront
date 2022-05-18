@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Flex, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Flex, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { Container } from "../../Theme/common";
 import dynamic from "next/dynamic";
 
@@ -14,7 +14,7 @@ export const HomePage = () => {
       console.log(typeof window);
     }
     axios
-      .get("http://192.168.1.6:5000/allVideo")
+      .get("http://localhost:5000/allVideo")
       .then((res) => {
         setData(res.data);
       })
@@ -33,7 +33,7 @@ export const HomePage = () => {
         <Text>home page</Text>
         {data && (
           <A
-            url={`http://192.168.1.6:5000/public/${
+            url={`http://localhost:5000/public/${
               video ? video : data[0].fileName
             }`}
             autoplay={false}
@@ -44,21 +44,23 @@ export const HomePage = () => {
           {data.map((el: any, ind: number) => {
             return (
               <>
-                <Flex
+                <Image
                   cursor={"pointer"}
                   h="300px"
                   w="100%"
-                  bg={`url(${el.thubnail})`}
+                  className="test"
+                  // bg={`url(${el.thubnail})`}
+                  src= {`${el.thubnail}`}
                   bgPos={"center"}
                   bgRepeat={"no-repeat"}
                   bgSize={"cover"}
                   key={ind}
                   onClick={() => setVideo(el.fileName)}
-                >
-                  <Text p={3} bg="gray" h="40px" color="#c4c4c4">
+                />
+                  {/* <Text p={3} bg="gray" h="40px" color="#c4c4c4">
                     {el.description}
                   </Text>
-                </Flex>
+                </Flex> */}
               </>
             );
           })}
