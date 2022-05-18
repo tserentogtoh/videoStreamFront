@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Flex, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import { Container } from "../../Theme/common";
+import { Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 
-const A = dynamic(()=>import("react-hls-player"),{ssr:false})
+const A = dynamic(() => import("react-hls-player"), { ssr: false });
 
 export const HomePage = () => {
   const [video, setVideo] = useState<any>("");
@@ -25,12 +24,10 @@ export const HomePage = () => {
   if (!data) {
     return null;
   }
-  console.log("dsa", video);
 
   return (
     <>
-      <Stack mb={10} mx="auto" w={Container}>
-        <Text>home page</Text>
+      <Stack my={10} mx="auto" maxW="1300px" w={["70%"]}>
         {data && (
           <A
             url={`http://localhost:5000/public/${
@@ -40,28 +37,33 @@ export const HomePage = () => {
             controls={true}
           />
         )}
-        <SimpleGrid columns={5} spacing={10}>
+        <SimpleGrid columns={4} spacing={10}>
           {data.map((el: any, ind: number) => {
             return (
-              <>
+              <Stack
+                _hover={{
+                  transform: "scale(1.85)",
+                }}
+                transition="ease .2s"
+                bg="gray.900"
+                cursor="pointer"
+              >
                 <Image
                   cursor={"pointer"}
-                  h="300px"
                   w="100%"
                   className="test"
                   // bg={`url(${el.thubnail})`}
-                  src= {`${el.thubnail}`}
+                  src={`${el.thubnail}`}
                   bgPos={"center"}
                   bgRepeat={"no-repeat"}
                   bgSize={"cover"}
                   key={ind}
                   onClick={() => setVideo(el.fileName)}
                 />
-                  {/* <Text p={3} bg="gray" h="40px" color="#c4c4c4">
-                    {el.description}
-                  </Text>
-                </Flex> */}
-              </>
+                <Text fontSize="xl" textAlign="center" p={2} color="#c4c4c4">
+                  {el.description}
+                </Text>
+              </Stack>
             );
           })}
         </SimpleGrid>
